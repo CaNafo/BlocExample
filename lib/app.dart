@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '/core/core.dart';
 import '/routes.dart';
 
 class App extends StatelessWidget {
@@ -7,6 +8,10 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(title: 'Task Open API', routes: {...bottomNavigation});
+    return MaterialApp(
+      theme: AppThemes.lightTheme,
+      title: 'Task Open API',
+      routes: {...bottomNavigation},
+    );
   }
 }
