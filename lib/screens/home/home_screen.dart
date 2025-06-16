@@ -30,7 +30,7 @@ class _Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-       const _CocktailTitle(),
+        const _CocktailTitle(),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: CustomSearchField(
@@ -56,14 +56,10 @@ class _Home extends StatelessWidget {
   }
 }
 
-
 class _CocktailTitle extends StatelessWidget {
-  final String title;
+  const _CocktailTitle({this.title = 'Explore our cocktails menu!'});
 
-  const _CocktailTitle({
-    Key? key,
-    this.title = 'Explore our cocktails menu!',
-  }) : super(key: key);
+  final String title;
 
   @override
   Widget build(BuildContext context) {
