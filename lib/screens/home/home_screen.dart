@@ -16,7 +16,10 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MainLayout(
       child: BlocProvider(
-        create: (_) => HomeBloc(homeRepository: context.read()),
+        create: (_) => HomeBloc(
+          homeRepository: context.read(),
+          favoritesRepository: context.read(),
+        ),
         child: const _Home(),
       ),
     );
@@ -30,7 +33,7 @@ class _Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-       const _CocktailTitle(),
+        const _CocktailTitle(),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: CustomSearchField(
@@ -41,29 +44,42 @@ class _Home extends StatelessWidget {
         ),
         BlocSelector<HomeBloc, HomeState, List<SearchResult>>(
           selector: (state) => state.searchResults,
-          builder: (_, results) => Expanded(
-            child: ListView.builder(
-              itemCount: results.length,
-              itemBuilder: (context, index) {
-                var drink = results[index];
-                return CocktailPreview(drink: drink);
-              },
-            ),
-          ),
+          builder: (_, results) {
+            if(results.isEmpty){
+              return const NoCocktailsFound();
+            }
+
+            return  Expanded(
+              child: ListView.builder(
+                itemCount: results.length,
+                itemBuilder: (context, index) {
+                  var cocktail = results[index];
+                  return BlocSelector<HomeBloc, HomeState, int>(
+                    selector: (state) => state.favoritesCount,
+                    builder: (_, state) => CocktailPreview(
+                      isFavorite: context.read<HomeBloc>().isCocktailFavorite(
+                        cocktail,
+                      ),
+                      drink: cocktail,
+                      onAddToFavorites: () {
+                        context.read<HomeBloc>().add(OnAddToFavorites(cocktail));
+                      },
+                    ),
+                  );
+                },
+              ),
+            );
+          },
         ),
       ],
     );
   }
 }
 
-
 class _CocktailTitle extends StatelessWidget {
-  final String title;
+  const _CocktailTitle({this.title = 'Explore our cocktails menu!'});
 
-  const _CocktailTitle({
-    Key? key,
-    this.title = 'Explore our cocktails menu!',
-  }) : super(key: key);
+  final String title;
 
   @override
   Widget build(BuildContext context) {

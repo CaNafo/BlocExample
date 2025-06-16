@@ -7,4 +7,5 @@ import '/screens/screens.dart';
 
 Map<String, Widget Function(BuildContext)> bottomNavigation = {
   HomeScreen.routeName: (_) => const HomeScreen(),
+  FavoritesScreen.routeName: (_) => const FavoritesScreen(),
 };

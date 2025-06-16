@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
+
 import '/data/data.dart';
 
 class CocktailPreview extends StatelessWidget {
-  const CocktailPreview({required this.drink, super.key});
+  const CocktailPreview({
+    required this.drink,
+    required this.onAddToFavorites,
+    required this.isFavorite,
+    super.key,
+  });
 
   final SearchResult drink;
+  final VoidCallback onAddToFavorites;
+  final bool isFavorite;
 
   @override
   Widget build(BuildContext context) {
- return Card(
+    return Card(
       elevation: 6,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -19,7 +27,7 @@ class CocktailPreview extends StatelessWidget {
           ClipRRect(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
             child: Image.network(
-              drink.photoUrl??"",
+              drink.photoUrl ?? "",
               height: 200,
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) => const SizedBox(
@@ -34,7 +42,9 @@ class CocktailPreview extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: Text(
               drink.title,
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+              style: Theme.of(
+                context,
+              ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
             ),
           ),
 
@@ -46,8 +56,10 @@ class CocktailPreview extends StatelessWidget {
               children: [
                 // Add to Favorites
                 ElevatedButton.icon(
-                  onPressed: (){},
-                  icon: const Icon(Icons.favorite_border),
+                  onPressed: onAddToFavorites,
+                  icon: isFavorite
+                      ? const Icon(Icons.check_circle, color: Colors.green)
+                      : const Icon(Icons.favorite_border),
                   label: const Text('Favorite'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.redAccent,
@@ -60,7 +72,7 @@ class CocktailPreview extends StatelessWidget {
 
                 // View Details
                 OutlinedButton.icon(
-                  onPressed: (){},
+                  onPressed: () {},
                   icon: const Icon(Icons.local_bar),
                   label: const Text('Details'),
                   style: OutlinedButton.styleFrom(

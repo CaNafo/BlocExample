@@ -1,2 +1,3 @@
 export './widgets/widgets.dart';
-export './layouts/main_layout.dart';
+export 'widgets/layouts/main_layout.dart';
+export './styles/styles.dart';
