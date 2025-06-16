@@ -11,7 +11,7 @@ List<SingleChildWidget> get injectServiceDependencies {
 /// Configure dependencies for repositories.
 List<SingleChildWidget> get injectRepositoryDependencies {
   return [
-    RepositoryProvider(create: (ctx) => HomeRepository(apiService: ctx.read()),),
-    RepositoryProvider(create: (ctx) => FavoritesRepository(),),
+    RepositoryProvider(create: (ctx) => HomeRepository(apiService: ctx.read())),
+    RepositoryProvider(create: (ctx) => FavoritesRepository()),
   ];
 }

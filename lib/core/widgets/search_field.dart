@@ -15,7 +15,10 @@ class CustomSearchField extends StatelessWidget {
         decoration: InputDecoration(
           hintText: "Enter search text here...",
           prefixIcon: const Icon(Icons.search),
-          contentPadding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+          contentPadding: const EdgeInsets.symmetric(
+            vertical: 14,
+            horizontal: 16,
+          ),
           filled: true,
           fillColor: Colors.white,
           border: OutlineInputBorder(

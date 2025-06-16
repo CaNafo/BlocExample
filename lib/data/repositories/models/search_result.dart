@@ -9,7 +9,6 @@ class SearchResult {
   final String title;
   final String? photoUrl;
 
-
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) {

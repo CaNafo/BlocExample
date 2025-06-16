@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -14,6 +16,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }) : _homeRepository = homeRepository,
        _favoritesRepository = favoritesRepository,
        super(HomeState()) {
+    _favoritesSubscription = _favoritesRepository.favoritesStream.listen((
+      items,
+    ) {
+      add(const OnFavoritesChanged());
+    });
     //Handle user search
     on<OnUserSearch>(
       _onUserSearch,
@@ -21,13 +28,23 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     );
     //Handle add to favorites press
     on<OnAddToFavorites>(_addToFavorites);
+    on<OnFavoritesChanged>(_onFavoritesChanged);
   }
 
   final HomeRepository _homeRepository;
   final FavoritesRepository _favoritesRepository;
+  late final StreamSubscription<List<SearchResult>> _favoritesSubscription;
 
   EventTransformer<E> debounce<E>(Duration duration) {
     return (events, mapper) => events.debounceTime(duration).switchMap(mapper);
+  }
+
+  void _onFavoritesChanged(OnFavoritesChanged event, Emitter<HomeState> emit) {
+    emit(
+      state.copyWith(
+        favoritesCount: _favoritesRepository.savedCocktails.length,
+      ),
+    );
   }
 
   Future<void> _onUserSearch(
@@ -59,5 +76,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   bool isCocktailFavorite(SearchResult selectedCocktail) {
     return _favoritesRepository.isFavorite(selectedCocktail);
+  }
+
+  @override
+  Future<void> close() {
+    _favoritesSubscription.cancel();
+    return super.close();
   }
 }

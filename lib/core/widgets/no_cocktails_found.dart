@@ -11,11 +11,7 @@ class NoCocktailsFound extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              Icons.local_bar_outlined,
-              size: 64,
-              color: Colors.grey[400],
-            ),
+            Icon(Icons.local_bar_outlined, size: 64, color: Colors.grey[400]),
             const SizedBox(height: 16),
             Text(
               'No cocktails found',
@@ -28,9 +24,9 @@ class NoCocktailsFound extends StatelessWidget {
             Text(
               'Try a different keyword or check your spelling.',
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Colors.grey[600],
-              ),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
             ),
           ],
         ),

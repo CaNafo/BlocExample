@@ -26,7 +26,7 @@ class _Favorites extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   return BlocBuilder<FavoritesBloc,FavoritesState>(
+    return BlocBuilder<FavoritesBloc, FavoritesState>(
       builder: (context, state) {
         var favoriteCocktails = context
             .read<FavoritesBloc>()
@@ -43,12 +43,12 @@ class _Favorites extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.all(12.0),
           child: ListView.builder(
-            itemCount: favoriteCocktails.length+1,
+            itemCount: favoriteCocktails.length + 1,
             itemBuilder: (context, index) {
-              if(index == 0){
+              if (index == 0) {
                 return const _FavoritesTitle();
               }
-              final cocktail = favoriteCocktails[index-1];
+              final cocktail = favoriteCocktails[index - 1];
               return CocktailPreview(
                 isFavorite: true,
                 onAddToFavorites: () {
@@ -66,14 +66,10 @@ class _Favorites extends StatelessWidget {
   }
 }
 
-
 class _FavoritesTitle extends StatelessWidget {
-  final String title;
+  const _FavoritesTitle({this.title = 'Your Favorite Cocktails'});
 
-  const _FavoritesTitle({
-    Key? key,
-    this.title = 'Your Favorite Cocktails',
-  }) : super(key: key);
+  final String title;
 
   @override
   Widget build(BuildContext context) {

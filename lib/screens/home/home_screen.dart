@@ -45,11 +45,11 @@ class _Home extends StatelessWidget {
         BlocSelector<HomeBloc, HomeState, List<SearchResult>>(
           selector: (state) => state.searchResults,
           builder: (_, results) {
-            if(results.isEmpty){
+            if (results.isEmpty) {
               return const NoCocktailsFound();
             }
 
-            return  Expanded(
+            return Expanded(
               child: ListView.builder(
                 itemCount: results.length,
                 itemBuilder: (context, index) {
@@ -62,7 +62,9 @@ class _Home extends StatelessWidget {
                       ),
                       drink: cocktail,
                       onAddToFavorites: () {
-                        context.read<HomeBloc>().add(OnAddToFavorites(cocktail));
+                        context.read<HomeBloc>().add(
+                          OnAddToFavorites(cocktail),
+                        );
                       },
                     ),
                   );

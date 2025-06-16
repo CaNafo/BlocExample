@@ -9,7 +9,9 @@ class ApiService {
 
   final HttpApi _httpClient;
 
-  Future<Result<CocktailsListApiModel, Exception>> fetchCocktails(String? searchQuery) async {
+  Future<Result<CocktailsListApiModel, Exception>> fetchCocktails(
+    String? searchQuery,
+  ) async {
     try {
       var res = await _httpClient.get('/v1/1/search.php?s=$searchQuery');
 

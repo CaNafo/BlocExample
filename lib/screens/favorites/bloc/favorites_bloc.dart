@@ -1,5 +1,6 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
-import 'package:rxdart/rxdart.dart';
 
 import '/data/data.dart';
 import '/utils/utils.dart';
@@ -10,12 +11,30 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
   FavoritesBloc({required FavoritesRepository favoritesRepository})
     : _favoritesRepository = favoritesRepository,
       super(FavoritesState()) {
+    _favoritesSubscription = _favoritesRepository.favoritesStream.listen((
+      items,
+    ) {
+      add(const OnFavoritesChanged());
+    });
     on<OnRemoveFromFavorites>(_removeFromFavorites);
+    on<OnFavoritesChanged>(_onFavoritesChanged);
   }
 
   final FavoritesRepository _favoritesRepository;
+  late final StreamSubscription<List<SearchResult>> _favoritesSubscription;
 
-  List<SearchResult> getFavoritesCocktails(){
+  void _onFavoritesChanged(
+    OnFavoritesChanged event,
+    Emitter<FavoritesState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        favoritesCount: _favoritesRepository.savedCocktails.length,
+      ),
+    );
+  }
+
+  List<SearchResult> getFavoritesCocktails() {
     return _favoritesRepository.savedCocktails;
   }
 
@@ -24,11 +43,13 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
     Emitter<FavoritesState> emit,
   ) {
     _favoritesRepository.addCocktailToFavorites(event.cocktail);
-    emit(
-      state.copyWith(
-        favoritesCount: _favoritesRepository.savedCocktails.length,
-      ),
-    );
+
     Logger.log("Fav count ${_favoritesRepository.savedCocktails.length}");
+  }
+
+  @override
+  Future<void> close() {
+    _favoritesSubscription.cancel();
+    return super.close();
   }
 }
