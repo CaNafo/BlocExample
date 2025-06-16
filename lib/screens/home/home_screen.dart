@@ -15,7 +15,10 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MainLayout(
-      child: BlocProvider(create: (_) => HomeBloc(), child: const _Home()),
+      child: BlocProvider(
+        create: (_) => HomeBloc(homeRepository: context.read()),
+        child: const _Home(),
+      ),
     );
   }
 }
@@ -38,7 +41,15 @@ class _Home extends StatelessWidget {
           builder: (_, results) => Expanded(
             child: ListView.builder(
               itemCount: results.length,
-              itemBuilder: (context, index) => Text("${results[index].title}"),
+              itemBuilder: (context, index) {
+                var drink = results[index];
+                return Column(
+                  children: [
+                    Text("${drink.title}"),
+                    if (drink.photoUrl != null) Image.network(drink.photoUrl!),
+                  ],
+                );
+              },
             ),
           ),
         ),
