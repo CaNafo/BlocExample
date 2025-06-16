@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task_open_api/data/data.dart';
-import 'package:task_open_api/screens/home/bloc/home_bloc.dart';
-import 'package:task_open_api/screens/home/bloc/home_event.dart';
-import 'package:task_open_api/screens/home/bloc/home_state.dart';
+
+import 'bloc/home_bloc.dart';
+import 'bloc/home_event.dart';
+import 'bloc/home_state.dart';
 
 import '/core/core.dart';
 

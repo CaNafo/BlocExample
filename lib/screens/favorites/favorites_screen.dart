@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task_open_api/core/core.dart';
-import 'package:task_open_api/screens/favorites/bloc/favorites_bloc.dart';
-import 'package:task_open_api/screens/favorites/bloc/favorites_event.dart';
-import 'package:task_open_api/screens/favorites/bloc/favorites_state.dart';
+
+import 'bloc/favorites_bloc.dart';
+import 'bloc/favorites_event.dart';
+import 'bloc/favorites_state.dart';
 
 class FavoritesScreen extends StatelessWidget {
   const FavoritesScreen({super.key});
