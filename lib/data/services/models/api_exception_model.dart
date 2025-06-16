@@ -11,10 +11,7 @@ class ApiExceptionModel implements Exception {
     try {
       json = parseApiResponseBody(body);
     } catch (e) {
-      Logger.log(
-        "$e",
-        type: LogType.error,
-      );
+      Logger.log("$e", type: LogType.error);
     }
 
     return ApiExceptionModel(

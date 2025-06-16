@@ -9,3 +9,7 @@ final class OnRemoveFromFavorites extends FavoritesEvent {
 
   final SearchResult cocktail;
 }
+
+final class OnFavoritesChanged extends FavoritesEvent {
+  const OnFavoritesChanged();
+}

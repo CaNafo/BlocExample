@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task_open_api/data/data.dart';
-import 'package:task_open_api/screens/home/bloc/home_bloc.dart';
-import 'package:task_open_api/screens/home/bloc/home_event.dart';
-import 'package:task_open_api/screens/home/bloc/home_state.dart';
+
+import 'bloc/home_bloc.dart';
+import 'bloc/home_event.dart';
+import 'bloc/home_state.dart';
 
 import '/core/core.dart';
 
@@ -45,11 +46,11 @@ class _Home extends StatelessWidget {
         BlocSelector<HomeBloc, HomeState, List<SearchResult>>(
           selector: (state) => state.searchResults,
           builder: (_, results) {
-            if(results.isEmpty){
+            if (results.isEmpty) {
               return const NoCocktailsFound();
             }
 
-            return  Expanded(
+            return Expanded(
               child: ListView.builder(
                 itemCount: results.length,
                 itemBuilder: (context, index) {
@@ -62,7 +63,9 @@ class _Home extends StatelessWidget {
                       ),
                       drink: cocktail,
                       onAddToFavorites: () {
-                        context.read<HomeBloc>().add(OnAddToFavorites(cocktail));
+                        context.read<HomeBloc>().add(
+                          OnAddToFavorites(cocktail),
+                        );
                       },
                     ),
                   );

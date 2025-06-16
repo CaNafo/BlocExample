@@ -10,8 +10,12 @@ final class OnUserSearch extends HomeEvent {
   final String searchQuery;
 }
 
-final class OnAddToFavorites extends HomeEvent{
+final class OnAddToFavorites extends HomeEvent {
   const OnAddToFavorites(this.cocktail);
 
   final SearchResult cocktail;
+}
+
+final class OnFavoritesChanged extends HomeEvent {
+  const OnFavoritesChanged();
 }
