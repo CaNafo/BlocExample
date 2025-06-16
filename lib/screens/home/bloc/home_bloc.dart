@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '/data/data.dart';
+import '/models/models.dart';
 import '/utils/utils.dart';
 import 'home_event.dart';
 import 'home_state.dart';
@@ -26,11 +27,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     OnUserSearch event,
     Emitter<HomeState> emit,
   ) async {
-    await _homeRepository.fetchCocktails(query: event.searchQuery);
-    Logger.log("Event ${event.searchQuery} emit ${emit.isDone}");
-    final updatedList = List.of(state.searchResults)
-      ..add(SearchResult(title: "TEST ${state.searchResults.length}"));
+    var res = await _homeRepository.fetchCocktails(query: event.searchQuery);
 
-    emit(state.copyWith(initSearchResults: updatedList));
+    switch (res) {
+      case Success(value: final drinks):
+        emit(state.copyWith(initSearchResults: drinks));
+        break;
+      case Failure(exception: final exception):
+        emit(state.copyWith(initSearchResults: []));
+        Logger.log("Exception fetching drinks $exception");
+        break;
+    }
   }
 }

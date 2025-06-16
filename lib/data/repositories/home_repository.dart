@@ -1,17 +1,28 @@
 import 'dart:async';
 
-import 'package:task_open_api/utils/logger.dart';
-
 import '/data/data.dart';
+import '/models/models.dart';
 
 class HomeRepository {
   const HomeRepository({required ApiService apiService})
     : _apiService = apiService;
 
   final ApiService _apiService;
-  Future<List<SearchResult>> fetchCocktails({String? query}) async {
+
+  Future<Result<List<SearchResult>, Exception>> fetchCocktails({
+    String? query,
+  }) async {
     var res = await _apiService.fetchCocktails(query);
-    Logger.log("RESULT API $res");
-    return [SearchResult(title: "TEST Cocktail")];
+    switch (res) {
+      case Success(value: final value):
+        return Success(
+          value.drinks
+                  ?.map((drink) => SearchResult(title: drink.strDrink))
+                  .toList() ??
+              [],
+        );
+      case Failure(exception: final exception):
+        return Failure(exception);
+    }
   }
 }
