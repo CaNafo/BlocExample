@@ -29,6 +29,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     //Handle add to favorites press
     on<OnAddToFavorites>(_addToFavorites);
     on<OnFavoritesChanged>(_onFavoritesChanged);
+
+    //Showing a random cocktail when home screen is opened
+    add(const OnUserSearch(""));
   }
 
   final HomeRepository _homeRepository;
@@ -55,10 +58,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     switch (res) {
       case Success(value: final drinks):
-        emit(state.copyWith(initSearchResults: drinks));
+        emit(state.copyWith(initSearchResults: drinks,isLoading: false),);
         break;
       case Failure(exception: final exception):
-        emit(state.copyWith(initSearchResults: []));
+        emit(state.copyWith(initSearchResults: [],isLoading: false));
         Logger.log("Exception fetching drinks $exception");
         break;
     }
