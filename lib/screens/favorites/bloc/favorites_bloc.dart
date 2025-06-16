@@ -6,8 +6,8 @@ import '/utils/utils.dart';
 import 'favorites_event.dart';
 import 'favorites_state.dart';
 
-class HomeBloc extends Bloc<FavoritesEvent, FavoritesState> {
-  HomeBloc({required FavoritesRepository favoritesRepository})
+class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
+  FavoritesBloc({required FavoritesRepository favoritesRepository})
     : _favoritesRepository = favoritesRepository,
       super(FavoritesState()) {
     on<OnRemoveFromFavorites>(_removeFromFavorites);
@@ -15,8 +15,8 @@ class HomeBloc extends Bloc<FavoritesEvent, FavoritesState> {
 
   final FavoritesRepository _favoritesRepository;
 
-  EventTransformer<E> debounce<E>(Duration duration) {
-    return (events, mapper) => events.debounceTime(duration).switchMap(mapper);
+  List<SearchResult> getFavoritesCocktails(){
+    return _favoritesRepository.savedCocktails;
   }
 
   void _removeFromFavorites(
