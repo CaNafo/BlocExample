@@ -15,11 +15,16 @@ class HomeRepository {
     var res = await _apiService.fetchCocktails(query);
     switch (res) {
       case Success(value: final value):
-
         //take(5) maps first 5 results as requested in the e-mail
         return Success(
-          value.drinks?.take(5)
-                  .map((drink) => SearchResult(title: drink.strDrink))
+          value.drinks
+                  ?.take(5)
+                  .map(
+                    (drink) => SearchResult(
+                      title: drink.strDrink,
+                      photoUrl: drink.strDrinkThumb,
+                    ),
+                  )
                   .toList() ??
               [],
         );

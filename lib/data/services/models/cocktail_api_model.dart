@@ -10,12 +10,12 @@ class CocktailApiModel {
   const CocktailApiModel({
     required this.idDrink,
     required this.strDrink,
-    this.strImageSource,
+    this.strDrinkThumb,
   });
 
   final String idDrink;
   final String strDrink;
-  final String? strImageSource;
+  final String? strDrinkThumb;
 
   Map<String, dynamic> toJson() => _$CocktailApiModelToJson(this);
 }

@@ -41,7 +41,12 @@ class _Home extends StatelessWidget {
           builder: (_, results) => Expanded(
             child: ListView.builder(
               itemCount: results.length,
-              itemBuilder: (context, index) => Text("${results[index].title}"),
+              itemBuilder: (context, index) => Column(
+                children: [
+                  Text("${results[index].photoUrl}"),
+                  Text("${results[index].title}"),
+                ],
+              ),
             ),
           ),
         ),
