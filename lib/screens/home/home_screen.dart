@@ -16,7 +16,10 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MainLayout(
       child: BlocProvider(
-        create: (_) => HomeBloc(homeRepository: context.read()),
+        create: (_) => HomeBloc(
+          homeRepository: context.read(),
+          favoritesRepository: context.read(),
+        ),
         child: const _Home(),
       ),
     );
@@ -46,7 +49,12 @@ class _Home extends StatelessWidget {
               itemCount: results.length,
               itemBuilder: (context, index) {
                 var drink = results[index];
-                return CocktailPreview(drink: drink);
+                return CocktailPreview(
+                  drink: drink,
+                  onAddToFavorites: () {
+                    context.read<HomeBloc>().add(OnAddToFavorites(drink));
+                  },
+                );
               },
             ),
           ),

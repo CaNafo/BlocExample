@@ -8,16 +8,23 @@ import 'home_event.dart';
 import 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  HomeBloc({required HomeRepository homeRepository})
-    : _homeRepository = homeRepository,
-      super(HomeState()) {
+  HomeBloc({
+    required HomeRepository homeRepository,
+    required FavoritesRepository favoritesRepository,
+  }) : _homeRepository = homeRepository,
+       _favoritesRepository = favoritesRepository,
+       super(HomeState()) {
+    //Handle user search
     on<OnUserSearch>(
       _onUserSearch,
       transformer: debounce(const Duration(milliseconds: 200)),
     );
+    //Handle add to favorites press
+    on<OnAddToFavorites>(_addToFavorites);
   }
 
   final HomeRepository _homeRepository;
+  final FavoritesRepository _favoritesRepository;
 
   EventTransformer<E> debounce<E>(Duration duration) {
     return (events, mapper) => events.debounceTime(duration).switchMap(mapper);
@@ -38,5 +45,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         Logger.log("Exception fetching drinks $exception");
         break;
     }
+  }
+
+  void _addToFavorites(OnAddToFavorites event, Emitter<HomeState> emit) {
+    _favoritesRepository.addCocktailToFavorites(event.cocktail);
+    Logger.log("Fav count ${_favoritesRepository.savedCocktails.length}");
   }
 }

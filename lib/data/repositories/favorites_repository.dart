@@ -8,12 +8,18 @@ class FavoritesRepository {
   List<SearchResult> get savedCocktails => _savedCocktails;
 
   void addCocktailToFavorites(SearchResult cocktail) {
-    _savedCocktails.add(cocktail);
+    bool cocktailInFavorites = removeCocktailFromFavorites(cocktail);
+    if(!cocktailInFavorites) {
+      _savedCocktails.add(cocktail);
+    }
   }
 
-  void removeCocktailFromFavorites(SearchResult selectedCocktail) {
+  bool removeCocktailFromFavorites(SearchResult selectedCocktail) {
+    var itemsCount = _savedCocktails.length;
     _savedCocktails.removeWhere(
       (cocktail) => cocktail == selectedCocktail,
     );
+
+    return itemsCount > _savedCocktails.length;
   }
 }
