@@ -1,6 +1,7 @@
 import '/models/models.dart';
 import '/utils/utils.dart';
 import 'models/api_exception_model.dart';
+import 'models/cocktails_list_api_model.dart';
 
 class ApiService {
   ApiService({HttpApi? httpClient})
@@ -10,14 +11,16 @@ class ApiService {
 
   Future<Result<dynamic, Exception>> fetchCocktails(String? searchQuery) async {
     try {
-      var res = await _httpClient.get('/v1/1/search.php?s=margarita');
+      var res = await _httpClient.get('/v1/1/search.php?s=$searchQuery');
 
       if (res?.statusCode == 200 && res?.body != null) {
-        return Success(5);
+        return Success(
+          CocktailsListApiModel.fromJson(parseApiResponseBody(res!.body)),
+        );
       }
       final apiExceptionModel = ApiExceptionModel.fromJson(
         res?.body,
-        'a/v1/1/search.php?s=',
+        'a/v1/1/search.php?s=$searchQuery',
         "GET",
       );
 
@@ -25,7 +28,7 @@ class ApiService {
     } catch (e, s) {
       Logger.log(
         "API Exception: $e",
-        tag: "/v1/1/search.php?s=",
+        tag: "/v1/1/search.php?s=$searchQuery",
         stackTrace: s,
         type: LogType.error,
       );

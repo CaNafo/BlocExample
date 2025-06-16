@@ -22,8 +22,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     return (events, mapper) => events.debounceTime(duration).switchMap(mapper);
   }
 
-  Future<void> _onUserSearch(OnUserSearch event, Emitter<HomeState> emit) async {
-    await _homeRepository.fetchCocktails();
+  Future<void> _onUserSearch(
+    OnUserSearch event,
+    Emitter<HomeState> emit,
+  ) async {
+    await _homeRepository.fetchCocktails(query: event.searchQuery);
     Logger.log("Event ${event.searchQuery} emit ${emit.isDone}");
     final updatedList = List.of(state.searchResults)
       ..add(SearchResult(title: "TEST ${state.searchResults.length}"));

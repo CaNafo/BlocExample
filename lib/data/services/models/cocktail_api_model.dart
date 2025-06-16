@@ -4,7 +4,7 @@ part 'cocktail_api_model.g.dart';
 
 @JsonSerializable()
 class CocktailApiModel {
-  factory CocktailApiModelModel.fromJson(Map<String, dynamic> json) =>
+  factory CocktailApiModel.fromJson(Map<String, dynamic> json) =>
       _$CocktailApiModelFromJson(json);
 
   const CocktailApiModel({
