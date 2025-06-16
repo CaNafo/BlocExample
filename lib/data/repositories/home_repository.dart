@@ -21,6 +21,7 @@ class HomeRepository {
                   ?.take(5)
                   .map(
                     (drink) => SearchResult(
+                      cocktailId: drink.idDrink,
                       title: drink.strDrink,
                       photoUrl: drink.strDrinkThumb,
                     ),

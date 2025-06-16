@@ -8,12 +8,15 @@ class MainLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isCurrentRouteActive(BuildContext context, String routeName) {
-      return ModalRoute.of(context)?.settings.name == routeName;
+    var currentRouteName = ModalRoute.of(context)?.settings.name;
+    bool isCurrentRouteActive(String routeName) {
+      return currentRouteName == routeName;
     }
 
-    int getCurrentRouteIndex(){
-      return bottomNavigation.entries.toList().indexWhere((route)=>route.key == ModalRoute.of(context)?.settings.name);
+    int getCurrentRouteIndex() {
+      return bottomNavigation.entries.toList().indexWhere(
+        (route) => route.key == currentRouteName,
+      );
     }
 
     return SafeArea(
@@ -22,8 +25,10 @@ class MainLayout extends StatelessWidget {
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: getCurrentRouteIndex(),
           onTap: (index) {
-            var selectedScreenRoute = bottomNavigation.entries.toList()[index].key;
-            if(!isCurrentRouteActive(context, selectedScreenRoute)) {
+            var selectedScreenRoute = bottomNavigation.entries
+                .toList()[index]
+                .key;
+            if (!isCurrentRouteActive(selectedScreenRoute)) {
               Navigator.of(context).pushNamed(selectedScreenRoute);
             }
           },
