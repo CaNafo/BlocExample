@@ -5,10 +5,12 @@ import '/data/data.dart';
 
 /// Configure dependencies fore services.
 List<SingleChildWidget> get injectServiceDependencies {
-  return [];
+  return [RepositoryProvider(create: (_) => ApiService())];
 }
 
 /// Configure dependencies for repositories.
 List<SingleChildWidget> get injectRepositoryDependencies {
-  return [RepositoryProvider(create: (_) => HomeRepository())];
+  return [
+    RepositoryProvider(create: (ctx) => HomeRepository(apiService: ctx.read())),
+  ];
 }

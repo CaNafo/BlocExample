@@ -15,7 +15,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
-      providers: [...injectRepositoryDependencies],
+      providers: [
+        ...injectServiceDependencies,
+        ...injectRepositoryDependencies,
+      ],
       child: const App(),
     );
   }

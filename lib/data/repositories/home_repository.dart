@@ -3,7 +3,12 @@ import 'dart:async';
 import '/data/data.dart';
 
 class HomeRepository {
-  Future<List<SearchResult>> fetchCocktails({required String? query}) async {
+  const HomeRepository({required ApiService apiService})
+    : _apiService = apiService;
+
+  final ApiService _apiService;
+  Future<List<SearchResult>> fetchCocktails({String? query}) async {
+    _apiService.fetchCocktails(query);
     return [SearchResult(title: "TEST Cocktail")];
   }
 }
