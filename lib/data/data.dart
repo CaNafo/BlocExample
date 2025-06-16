@@ -1,1 +1,1 @@
-export './repositories/models/models.dart';
+export './repositories/repositories.dart';

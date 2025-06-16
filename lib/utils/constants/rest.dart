@@ -4,7 +4,7 @@ import '../utils.dart';
 
 ///This file contains all REST API configuration
 
-const String baseUrl = 'https://pengwenzback-dev.lanaco.com/';
+const String baseUrl = 'www.thecocktaildb.com/api/json';
 
 final _httpBaseConfig = HttpApiConfig(
   baseApiUrl: baseUrl,
