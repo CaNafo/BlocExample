@@ -30,11 +30,14 @@ class _Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text("TEST"),
-        CustomSearchField(
-          onChanged: (text) {
-            context.read<HomeBloc>().add(OnUserSearch(text));
-          },
+       const _CocktailTitle(),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: CustomSearchField(
+            onChanged: (text) {
+              context.read<HomeBloc>().add(OnUserSearch(text));
+            },
+          ),
         ),
         BlocSelector<HomeBloc, HomeState, List<SearchResult>>(
           selector: (state) => state.searchResults,
@@ -43,17 +46,36 @@ class _Home extends StatelessWidget {
               itemCount: results.length,
               itemBuilder: (context, index) {
                 var drink = results[index];
-                return Column(
-                  children: [
-                    Text("${drink.title}"),
-                    if (drink.photoUrl != null) Image.network(drink.photoUrl!),
-                  ],
-                );
+                return CocktailPreview(drink: drink);
               },
             ),
           ),
         ),
       ],
+    );
+  }
+}
+
+
+class _CocktailTitle extends StatelessWidget {
+  final String title;
+
+  const _CocktailTitle({
+    Key? key,
+    this.title = 'Explore our cocktails menu!',
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
+      child: Text(
+        title,
+        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+          fontWeight: FontWeight.bold,
+          color: Colors.black87,
+        ),
+      ),
     );
   }
 }
