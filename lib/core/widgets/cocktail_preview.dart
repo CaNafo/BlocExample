@@ -6,11 +6,13 @@ class CocktailPreview extends StatelessWidget {
   const CocktailPreview({
     required this.drink,
     required this.onAddToFavorites,
+    required this.isFavorite,
     super.key,
   });
 
   final SearchResult drink;
   final VoidCallback onAddToFavorites;
+  final bool isFavorite;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +57,9 @@ class CocktailPreview extends StatelessWidget {
                 // Add to Favorites
                 ElevatedButton.icon(
                   onPressed: onAddToFavorites,
-                  icon: const Icon(Icons.favorite_border),
+                  icon: isFavorite
+                      ? const Icon(Icons.check_circle, color: Colors.green)
+                      : const Icon(Icons.favorite_border),
                   label: const Text('Favorite'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.redAccent,

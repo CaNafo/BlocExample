@@ -44,20 +44,32 @@ class _Home extends StatelessWidget {
         ),
         BlocSelector<HomeBloc, HomeState, List<SearchResult>>(
           selector: (state) => state.searchResults,
-          builder: (_, results) => Expanded(
-            child: ListView.builder(
-              itemCount: results.length,
-              itemBuilder: (context, index) {
-                var drink = results[index];
-                return CocktailPreview(
-                  drink: drink,
-                  onAddToFavorites: () {
-                    context.read<HomeBloc>().add(OnAddToFavorites(drink));
-                  },
-                );
-              },
-            ),
-          ),
+          builder: (_, results) {
+            if(results.isEmpty){
+              return const NoCocktailsFound();
+            }
+
+            return  Expanded(
+              child: ListView.builder(
+                itemCount: results.length,
+                itemBuilder: (context, index) {
+                  var cocktail = results[index];
+                  return BlocSelector<HomeBloc, HomeState, int>(
+                    selector: (state) => state.favoritesCount,
+                    builder: (_, state) => CocktailPreview(
+                      isFavorite: context.read<HomeBloc>().isCocktailFavorite(
+                        cocktail,
+                      ),
+                      drink: cocktail,
+                      onAddToFavorites: () {
+                        context.read<HomeBloc>().add(OnAddToFavorites(cocktail));
+                      },
+                    ),
+                  );
+                },
+              ),
+            );
+          },
         ),
       ],
     );

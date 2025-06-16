@@ -49,6 +49,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   void _addToFavorites(OnAddToFavorites event, Emitter<HomeState> emit) {
     _favoritesRepository.addCocktailToFavorites(event.cocktail);
+    emit(
+      state.copyWith(
+        favoritesCount: _favoritesRepository.savedCocktails.length,
+      ),
+    );
     Logger.log("Fav count ${_favoritesRepository.savedCocktails.length}");
+  }
+
+  bool isCocktailFavorite(SearchResult selectedCocktail) {
+    return _favoritesRepository.isFavorite(selectedCocktail);
   }
 }
