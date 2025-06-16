@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task_open_api/core/core.dart';
 import 'package:task_open_api/screens/favorites/bloc/favorites_bloc.dart';
 import 'package:task_open_api/screens/favorites/bloc/favorites_event.dart';
+import 'package:task_open_api/screens/favorites/bloc/favorites_state.dart';
 
 class FavoritesScreen extends StatelessWidget {
   const FavoritesScreen({super.key});
@@ -25,38 +26,42 @@ class _Favorites extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var favoriteCocktails = context
-        .read<FavoritesBloc>()
-        .getFavoritesCocktails();
-    if (favoriteCocktails.isEmpty) {
-      return const Center(
-        child: Text(
-          'No favorites yet 🍸',
-          style: TextStyle(fontSize: 18, color: Colors.grey),
-        ),
-      );
-    }
+   return BlocBuilder<FavoritesBloc,FavoritesState>(
+      builder: (context, state) {
+        var favoriteCocktails = context
+            .read<FavoritesBloc>()
+            .getFavoritesCocktails();
+        if (favoriteCocktails.isEmpty) {
+          return const Center(
+            child: Text(
+              'No favorites yet 🍸',
+              style: TextStyle(fontSize: 18, color: Colors.grey),
+            ),
+          );
+        }
 
-    return Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: ListView.builder(
-        itemCount: favoriteCocktails.length+1,
-        itemBuilder: (context, index) {
-          if(index == 0){
-            return const _FavoritesTitle();
-          }
-          final cocktail = favoriteCocktails[index-1];
-          return CocktailPreview(
-            isFavorite: true,
-            onAddToFavorites: () {
-              context.read<FavoritesBloc>().add(
-                OnRemoveFromFavorites(cocktail),
+        return Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: ListView.builder(
+            itemCount: favoriteCocktails.length+1,
+            itemBuilder: (context, index) {
+              if(index == 0){
+                return const _FavoritesTitle();
+              }
+              final cocktail = favoriteCocktails[index-1];
+              return CocktailPreview(
+                isFavorite: true,
+                onAddToFavorites: () {
+                  context.read<FavoritesBloc>().add(
+                    OnRemoveFromFavorites(cocktail),
+                  );
+                },
+                drink: cocktail,
               );
             },
-            drink: cocktail,
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }
