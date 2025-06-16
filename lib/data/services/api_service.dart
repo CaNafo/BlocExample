@@ -36,4 +36,32 @@ class ApiService {
       return Failure(Exception(e));
     }
   }
+
+
+  Future<Result<CocktailsListApiModel, Exception>> fetchRandomCocktail(
+  ) async {
+    try {
+      var res = await _httpClient.get('/v1/1/random.php');
+
+      if (res?.statusCode == 200 && res?.body != null) {
+        var parsedResponse =
+        CocktailsListApiModel.fromJson(parseApiResponseBody(res!.body));
+        return Success(parsedResponse);
+      }
+      final apiExceptionModel = ApiExceptionModel.fromJson(
+        res?.body,
+        '/v1/1/random.php',
+        "GET",
+      );
+
+      return Failure(Exception(apiExceptionModel.toString()));
+    } catch (e, s) {
+      Logger.log(
+        "API Exception: $e",
+        tag: "/v1/1/random.php",
+        type: LogType.error,
+      );
+      return Failure(Exception(e));
+    }
+  }
 }

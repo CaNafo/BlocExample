@@ -10,9 +10,9 @@ class HomeRepository {
   final ApiService _apiService;
 
   Future<Result<List<SearchResult>, Exception>> fetchCocktails({
-    String? query,
+    String query = "",
   }) async {
-    var res = await _apiService.fetchCocktails(query);
+    var res = query.isEmpty ? await _apiService.fetchRandomCocktail() : await _apiService.fetchCocktails(query);
     switch (res) {
       case Success(value: final value):
         //take(5) maps first 5 results as requested in the e-mail

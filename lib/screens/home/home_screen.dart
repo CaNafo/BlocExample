@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task_open_api/data/data.dart';
 
+import '/core/core.dart';
 import 'bloc/home_bloc.dart';
 import 'bloc/home_event.dart';
 import 'bloc/home_state.dart';
-
-import '/core/core.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -46,6 +45,12 @@ class _Home extends StatelessWidget {
         BlocSelector<HomeBloc, HomeState, List<SearchResult>>(
           selector: (state) => state.searchResults,
           builder: (_, results) {
+            var isLoading = context.read<HomeBloc>().state.isLoading;
+
+            if(isLoading){
+              return const Center(child: CircularProgressIndicator(),);
+            }
+
             if (results.isEmpty) {
               return const NoCocktailsFound();
             }
