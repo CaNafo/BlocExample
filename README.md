@@ -11,9 +11,11 @@ git clone https://github.com/CaNafo/BlocExample.git
 cd BlocExample
 flutter pub get
 flutter run
+```
 
 # 📦 Project Structure
 
+```
 lib/
 ├── core/           # Core utilities, constants, and shared logic
 ├── data/           # Data sources, repositories, and API clients
@@ -23,6 +25,7 @@ lib/
 ├── app.dart        # Root widget and app-level configuration
 ├── main.dart       # Entry point with dependency setup
 └── routes.dart     # Centralized route definitions
+```
 
 # 🔧 Features
 - Modular architecture for clean separation of layers
