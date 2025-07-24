@@ -1,16 +1,36 @@
-# task_open_api
+# 🧱 BlocExample
 
-A new Flutter project.
+A minimal Flutter project demonstrating the use of the **BLoC (Business Logic Component)** pattern for state management. Ideal for developers exploring clean architecture and reactive state handling in Flutter.
 
-## Getting Started
+## 🚀 Getting Started
 
-This project is a starting point for a Flutter application.
+To run this project locally:
 
-A few resources to get you started if this is your first Flutter project:
+```bash
+git clone https://github.com/CaNafo/BlocExample.git
+cd BlocExample
+flutter pub get
+flutter run
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+# 📦 Project Structure
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+lib/
+├── core/           # Core utilities, constants, and shared logic
+├── data/           # Data sources, repositories, and API clients
+├── models/         # Domain models and data classes
+├── screens/        # UI screens with Bloc integration
+├── utils/          # Helper functions and extensions
+├── app.dart        # Root widget and app-level configuration
+├── main.dart       # Entry point with dependency setup
+└── routes.dart     # Centralized route definitions
+
+# 🔧 Features
+- Modular architecture for clean separation of layers
+- BLoC pattern for reactive state management
+- Centralized routing via routes.dart
+- Scalable folder structure for future features
+- Easy integration of new screens and blocs
+
+# 📚 Resources
+- BLoC Library Docs [https://bloclibrary.dev/#/]
+- Flutter Architecture Guidelines [https://docs.flutter.dev/data-and-backend/state-mgmt/simple]
